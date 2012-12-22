@@ -1,0 +1,24 @@
+{% extends "dialogform/basic.html" %}
+{% block result_info %}
+	<!-- <h1>添加评论</h1> -->
+	<!-- {{ loginuser.ecncuid }} -->
+	<p style="color: red;">
+	{% if errors %}
+		{% for error in errors %}
+			{{ error }}
+		{% endfor %}
+		 <input id="flag" value="0" style="display:none"></input>
+	{% else %}
+		 评论成功! 
+		 <input id="flag" value="1" style="display:none"></input>
+	{% endif %}
+	</p>
+{% endblock %}
+{% block formbody %}
+<div >
+	<div class="comment_form">
+		<!-- <label for="id_comment"></label> -->
+		<textarea style="width:10;height:10;" id="id_comment" maxlength="2048" name="comment" value="" class="text ui-widget-content ui-corner-all" placeholder="请写下您的评论"></textarea>
+	</div>
+</div>
+{% endblock%}

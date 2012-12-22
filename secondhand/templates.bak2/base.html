@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{% block title %}Second Hand Market{% endblock %}</title>
+		{% block css %}{% endblock %}
+		{% block morehead %}{% endblock %}
+	</head>
+	<body>
+		<table width=100%  >
+			{% if loginuser %}
+			<tr>
+			<td align="right">
+				<a href='/profile/{{ loginuser.id }}/'>{{ loginuser.nick }}</a>
+				<a href='/logout/'>logout</a>
+			</td>
+			</tr>
+			{% else %}
+			<tr>
+			<td>
+				{% if not isLogin and not reg_or_login %}
+				<form id="login" name="login" action="" method="POST">
+					{% csrf_token %}
+				Username<input id="username" type="text"
+			size="10" maxlength="16" name="username">
+		Password<input id="password" type="password" 
+			size="10" maxlength="16" name="password">
+			<input id="submit" type="submit" value="login"></form>
+				{% endif %}
+			</td>
+			<td align="right">
+				{% if not isLogin %}
+				<a href='/register/'>register</a>
+				{% endif %}
+			</td>
+			</tr>
+			{% endif %}
+		</table>
+		<hr></hr>
+		<ul>
+			{% if index %}
+			<li class="on">
+			{% else %}
+			<li>
+			{% endif %}
+			<a href='/index/'>index</a>
+			</li>
+			{% if index %}
+			<li>
+			{% else %}
+			<li class="on">
+			{% endif %}
+			<a href='/search/'>search</a>
+			</li>
+		</ul>
+		<form id="search" name="ssform" action="/search/" method="get">
+			<input id="search_text" type="text" size="22" maxlength="60" name="query" value="{{ query }}" autocomplete="off" class="field" placeholder="书名、作者">
+			<input type="hidden" name="page" value="1">
+			<input id="search_submit" type="submit" value="" class="bn-srh" >
+		</form>
+		{% block content %}{% endblock %}
+		<span id="icp" class="fleft gray-link">
+			Copyright &copy; 2012 lykling All rights reserved?
+		</span>
+		<table id="st" cellspacing="0" cellpadding="2">
+		</table>
+		<a href="#"><span><em>返回<br/>顶部</em></span></a>
+		{% block extend %}{% endblock %}
+	</body>
+</html>

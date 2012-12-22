@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<form id="login" name="login" action="/login/" method="POST">
+	{% csrf_token %}
+	<table align="center">
+		<tr>
+			<td class="span1">
+				<label for="username">
+				<p>Username</p>
+				</label>
+			</td>
+			<td>
+				<input id="username" type="text" size="20" maxlength="16" name="username">
+			</td>
+		</tr>
+		<tr>
+			<td class="span1">
+				<label for="password">
+				<p>Password</p>
+				</label>
+			</td>
+			<td>
+				<input id="password" type="password" size="20" maxlength="16" name="password">
+			</td>
+		</tr>
+		<tr>
+			<th align="center" colspan="2">
+				<input class="btn" id="submit" type="submit" value="Login">
+			</th>
+		</tr>
+	</table>
+</form>
+{% endblock %}

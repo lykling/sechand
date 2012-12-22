@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block morehead %}
+<link type="text/css" href="/static/css/bookInfo.css" rel="stylesheet"/>
+<link type="text/css" href="/static/css/form.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/js/csrf.js"></script>
+<script type="text/javascript" src="/static/js/sechand_dialog.js"></script>
+<script type="text/javascript" src="/static/js/hidetext.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<div class="well sidebar-nav">
+						<li class="nav-header">
+						<fieldset style="height:900;">
+							<img src="/static/img/loader.gif" alt="{{ tuser.name }}" width=30 height=30 />
+						</fieldset>
+						</li>
+						<li class="nav-header">
+					</div>
+					<h3>
+						{{ tuser.name }}({{ tuser.nick }})
+					</h3>
+					</li>
+					<li>
+					</li>
+					<div class="row-fluid">
+						<div class="row-fluid">
+							{% if tuser.FNNP %}
+							<label for="id_FNNP" class="span3">Phone:</label>
+							<label id="id_FNNP" class="span3">{{ tuser.FNNP }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if tuser.FNNM %}
+							<label for="id_FNNM" class="span3">Email:</label>
+							<label id="id_FNNM" class="span3">{{ tuser.FNNM }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if tuser.address %}
+							<label for="id_Uaddress" class="span3">Address:</label>
+							<label id="id_Uaddress" class="span3">{{ tuser.address }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser == tuser %}
+							<form action="/editpro/" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name=uid value="{{ loginuser.id }}"/>
+								<input class="btn" type="submit" name="submit" value="Edit profile" />
+							</form>
+							{% endif %}
+						</div>
+					</div>
+				</ul>
+			</div>
+			{% if loginuser == tuser %}
+			<div class="well sidebar">
+				<ul class="nav nav-list">
+					<li><a href="/product/add/" class="btn" />添加产品</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+		<div class="span8">
+			<div class="row-fluid">
+				{% for product in products1 %}
+				<div class="span4">
+					<div class="well sidebar-nav">
+						<h3 name="Title">
+							{{ product.title }}
+						</h3>
+						<p name="Description">
+						{{ product.descrip }}
+						</p>
+						<a class="btn" href="/product/{{ product.id }}/">
+							View details »
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="row-fluid">
+				{% for product in products2 %}
+				<div class="span4">
+					<div class="well sidebar-nav">
+						<h3 name="Title">
+							{{ product.title }}
+						</h3>
+						<p name="Description">
+						{{ product.descrip }}
+						</p>
+						<a class="btn" href="/product/{{ product.id }}/">
+							View details »
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="hero-unit">
+				<h3>评论</h3>
+				{% for comment in tuser.commentuser_set.all %}
+				<div class="row-fluid">
+					<fieldset class="well sidebar">
+						<legend>{{ comment.getCommenter.nick }}发表于{{ comment.commenttime|date:"Y-m-d H:i:s" }}</legend>
+						<p>
+					<pre>{{ comment.content }}</pre>
+						<p></p>
+						</p>
+					</fieldset>
+				</div>
+				{% endfor %}
+				<a id="comment" class="btn btn-primary" name="{{ tuser.id }}" type="button">
+					我也说两句 »
+				</a>
+			</div>
+			<div>
+				<div id="dialog_form"></div>
+				<div id="commentuserform" title="评论"></div>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>
+{% endblock %}

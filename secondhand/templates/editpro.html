@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title%} Register {% endblock %}
+{% block content %}
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript">
+	function addphone(){
+		var formHtml = '<Input type="text" name="phone" maxlength="32" value=""/>'
+		$("#addphoneblock").append(formHtml)
+	}
+	function addmail(){
+		var formHtml = '<Input type="text" name="mail" maxlength="32" value=""/>'
+		$("#addmailblock").append(formHtml)
+	}
+	function addClickHandlers(){
+		$("#addphone").click(function() {addphone()})
+		$("#addmail").click(function() {addmail()})
+	}
+	$(document).ready(addClickHandlers);
+</script>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<div class="well sidebar-nav">
+						<li class="nav-header">
+						<fieldset style="height:900;">
+							<img src="/static/img/loader.gif" alt="{{ loginuser.name }}" width=30 height=30 />
+						</fieldset>
+						</li>
+						<li class="nav-header">
+					</div>
+					<h3>
+						{{ loginuser.name }}({{ loginuser.nick }})
+					</h3>
+					</li>
+					<li>
+					</li>
+					<div class="row-fluid">
+						<div class="row-fluid">
+							{% if loginuser.FNNP %}
+							<label for="id_FNNP" class="span3">Phone:</label>
+							<label id="id_FNNP" class="span3">{{ loginuser.FNNP }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser.FNNM %}
+							<label for="id_FNNM" class="span3">Email:</label>
+							<label id="id_FNNM" class="span3">{{ loginuser.FNNM }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser.address %}
+							<label for="id_Uaddress" class="span3">Address:</label>
+							<label id="id_Uaddress" class="span3">{{ loginuser.address }}</label>
+							{% endif %}
+						</div>
+					</div>
+				</ul>
+			</div>
+		</div>
+		<div class="span8">
+			<div class="hero-unit">
+				<div>
+					<p>
+					<h1>
+						Edit your profile
+					</h1>
+					</p>
+					<p></p>
+					<p>
+					<form class="row-fluid" action="" method="POST">
+						{% csrf_token %}
+						<div class="row-fluid">
+							<div class="span1">
+								<label for="id_nick">NickName:</label>
+							</div>
+							<div id="id_nick" class="span1">
+								<input type="text" name="nick" maxlength="32" value="{{ loginuser.nick }}"/>
+							</div>
+						</div>
+						<p></p>
+						<div class="row-fluid">
+							<div class="span1">
+								<label for="id_address">Address:</label>
+							</div>
+							<div id="id_address" class="span1">
+								<input type="text" name="address" maxlength="32" value="{{ loginuser.address }}"/>
+							</div>
+						</div>
+						<p></p>
+						<div class="row-fluid">
+							<div class="span1">
+								<label for="id_phone">PhoneNum:</label>
+							</div>
+							<div id="id_phone" class="span1">
+								{% for phone in loginuser.phonenumber_set.all %}
+								{% if phone.num %}
+								<input type="text" name="phone" maxlength="32" value="{{ phone.num }}"/>
+								{% endif %}
+								{% endfor %}
+								<div id=addphoneblock>
+								</div>
+								<a class="btn" id="addphone" name="addphone" value="addphone" type="button">AddPhone</a>
+							</div>
+						</div>
+						<p></p>
+						<div class="row-fluid">
+							<div class="span1">
+								<label for="id_mail">Email:</label>
+							</div>
+							<div id="id_mail" class="span1">
+								{% for mail in loginuser.mail_set.all %}
+								{% if mail.address %}
+								<input type="text" name="mail" maxlength="32" value="{{ mail.address }}"/>
+								{% endif %}
+								{% endfor %}
+								<div id=addmailblock>
+								</div>
+								<a class="btn" id="addmail" name="addmail" value="addmail" type="button">AddMail</a>
+							</div>
+						</div>
+						<p></p>
+						<input type="hidden" name="uid" value="{{ loginuser.id }}"/>
+						<input class="btn btn-primary" type="submit" name="submit" value="Save"/>
+					</form>
+					</p>
+				</div>
+			</div>
+			<div class="row-fluid">
+			</div>
+			<hr>
+			<div>
+				© Company 2012
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

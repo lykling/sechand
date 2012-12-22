@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block morehead %}
+<script type="text/javascript" src="/static/js/hidetext.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<div class="well sidebar-nav">
+						<li class="nav-header">
+						<fieldset style="height:900;">
+							<img src="/static/img/loader.gif" alt="{{ tuser.name }}" width=30 height=30 />
+						</fieldset>
+						</li>
+						<li class="nav-header">
+					</div>
+					<h3>
+						{{ loginuser.name }}({{ loginuser.nick }})
+					</h3>
+					</li>
+					<li>
+					</li>
+					<div class="row-fluid">
+						<div class="row-fluid">
+							{% if loginuser.FNNP %}
+							<label for="id_FNNP" class="span3">Phone:</label>
+							<label id="id_FNNP" class="span3">{{ loginuser.FNNP }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser.FNNM %}
+							<label for="id_FNNM" class="span3">Email:</label>
+							<label id="id_FNNM" class="span3">{{ loginuser.FNNM }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser.address %}
+							<label for="id_Uaddress" class="span3">Address:</label>
+							<label id="id_Uaddress" class="span3">{{ loginuser.address }}</label>
+							{% endif %}
+						</div>
+						<div class="row-fluid">
+							{% if loginuser %}
+							<form action="/editpro/" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name=uid value="{{ loginuser.id }}"/>
+								<!-- <input type="submit" name="submit" value="Edit profile" style="background-color:RGB(205,17,118); border:0px"/> -->
+								<input class="btn" type="submit" name="submit" value="Edit profile" />
+							</form>
+							<!-- <a class="btn" href="#"> -->
+								<!-- Edit profile -->
+								<!-- <br> -->
+								<!-- </a> -->
+							{% endif %}
+						</div>
+					</div>
+				</ul>
+			</div>
+		</div>
+		<div class="span8">
+			<div class="row-fluid">
+				{% for product in products1 %}
+				<div class="span4">
+					<div class="well sidebar-nav">
+						<h3 name="Title">
+							{{ product.title }}
+						</h3>
+						<p name="Description">
+						{{ product.descrip }}
+						</p>
+						<a class="btn" href="/product/{{ product.id }}/">
+							View details »
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="row-fluid">
+				{% for product in products2 %}
+				<div class="span4">
+					<div class="well sidebar-nav">
+						<h3 name="Title">
+							{{ product.title }}
+						</h3>
+						<p name="Description">
+						{{ product.descrip }}
+						</p>
+						<a class="btn" href="/product/{{ product.id }}/">
+							View details »
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="hero-unit">
+				<h3>最近评论</h3>
+				{% for comment in comments %}
+				<div class="row-fluid">
+					<fieldset class="well sidebar">
+						<legend>{{ comment.getCommenter.nick }}发表于{{ comment.commenttime|date:"Y-m-d H:i:s" }}</legend>
+						<a href="/product/{{ comment.targetproduct.id }}/">@{{ comment.targetproduct.title }}</a>
+						<p>
+					<pre>{{ comment.content }}</pre>
+						<p></p>
+						</p>
+					</fieldset>
+				</div>
+				{% endfor %}
+				<a class="btn btn-primary" href="#">
+					Learn more »
+				</a>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<div id="whole">
+	{% block result_info %}{% endblock %}
+	<form>
+		{% csrf_token %}
+		<fieldset>
+			<div id="label_input">
+				{% block formbody %}{% endblock %}
+			</div>
+		</fieldset>
+	</form>
+</div>
+

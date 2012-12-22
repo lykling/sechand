@@ -1,0 +1,15 @@
+#record_list table {
+}
+
+#record_list .post {
+	float: left;
+	width: 45%;
+	margin-top: 0px;
+	margin-bottom: 15px;
+	overflow: visible;
+	border-top: 1px dashed #DDD;
+	padding-top: 10px;
+	padding-right: 4%;
+}
+
+
