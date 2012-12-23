@@ -1,9 +1,35 @@
 {% extends "base.html" %}
+{% block morehead %}
+<script type="text/javascript" src="/static/js/hidetext.js"></script>
+{% endblock %}
 {% block content %}
 <div class="well sidebar">
-	<form id="search" name="search" action="" method="GET">
-		{% csrf_token %}
-	</form>
+	<div class="row-fluid">
+		<form class="navbar-form center" id="search" name="search" action="" method="GET">
+			<input class="span2" type="text" name="query" value="{{ query }}" placeholder="请输入查询关键字"/>
+			<input class="btn" type="submit" name="check" value="查询"/>
+		</form>
+	</div>
 </div>
+<p></p>
+<ul class="nav nav-list">
+	{% for product in products %}
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="well sidebar-nav">
+				<h3 name="Title">
+					{{ product.title }}
+				</h3>
+				<p name="Description">
+				{{ product.descrip }}
+				</p>
+				<a class="btn" href="/product/{{ product.id }}/">
+					View details »
+				</a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</ul>
 {% endblock %}
 

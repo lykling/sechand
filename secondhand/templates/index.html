@@ -8,16 +8,20 @@
 		<div class="span4">
 			<div class="well sidebar-nav">
 				<ul class="nav nav-list">
-					<div class="well sidebar-nav">
+					<div class="">
 						<li class="nav-header">
 						<fieldset style="height:900;">
-							<img src="/static/img/loader.gif" alt="{{ tuser.name }}" width=30 height=30 />
+							<img src="/static/img/noavatar_big.gif" alt="{{ tuser.name }}" />
 						</fieldset>
 						</li>
 						<li class="nav-header">
 					</div>
 					<h3>
+						{% if loginuser %}
 						{{ loginuser.name }}({{ loginuser.nick }})
+						{% else %}
+						游客
+						{% endif %}
 					</h3>
 					</li>
 					<li>
@@ -60,46 +64,49 @@
 			</div>
 		</div>
 		<div class="span8">
-			<div class="row-fluid">
-				{% for product in products1 %}
-				<div class="span4">
-					<div class="well sidebar-nav">
-						<h3 name="Title">
-							{{ product.title }}
-						</h3>
-						<p name="Description">
-						{{ product.descrip }}
-						</p>
-						<a class="btn" href="/product/{{ product.id }}/">
-							View details »
-						</a>
+			<div class="well sidebar">
+				<h3>最新物品</h3>
+				<div class="row-fluid">
+					{% for product in products1 %}
+					<div class="span4">
+						<div class="well sidebar-nav">
+							<h3 name="Title">
+								{{ product.title }}
+							</h3>
+							<p name="Description">
+							{{ product.descrip }}
+							</p>
+							<a class="btn" href="/product/{{ product.id }}/">
+								View details »
+							</a>
+						</div>
 					</div>
+					{% endfor %}
 				</div>
-				{% endfor %}
-			</div>
-			<div class="row-fluid">
-				{% for product in products2 %}
-				<div class="span4">
-					<div class="well sidebar-nav">
-						<h3 name="Title">
-							{{ product.title }}
-						</h3>
-						<p name="Description">
-						{{ product.descrip }}
-						</p>
-						<a class="btn" href="/product/{{ product.id }}/">
-							View details »
-						</a>
+				<div class="row-fluid">
+					{% for product in products2 %}
+					<div class="span4">
+						<div class="well sidebar-nav">
+							<h3 name="Title">
+								{{ product.title }}
+							</h3>
+							<p name="Description">
+							{{ product.descrip }}
+							</p>
+							<a class="btn" href="/product/{{ product.id }}/">
+								View details »
+							</a>
+						</div>
 					</div>
+					{% endfor %}
 				</div>
-				{% endfor %}
 			</div>
 			<div class="hero-unit">
 				<h3>最近评论</h3>
 				{% for comment in comments %}
 				<div class="row-fluid">
 					<fieldset class="well sidebar">
-						<legend>{{ comment.getCommenter.nick }}发表于{{ comment.commenttime|date:"Y-m-d H:i:s" }}</legend>
+						<legend><a href="/profile/{{ comment.commenter_uid }}">{{ comment.getCommenter.nick }}</a>发表于{{ comment.commenttime|date:"Y-m-d H:i:s" }}</legend>
 						<a href="/product/{{ comment.targetproduct.id }}/">@{{ comment.targetproduct.title }}</a>
 						<p>
 					<pre>{{ comment.content }}</pre>
@@ -108,9 +115,6 @@
 					</fieldset>
 				</div>
 				{% endfor %}
-				<a class="btn btn-primary" href="#">
-					Learn more »
-				</a>
 			</div>
 			<hr>
 		</div>

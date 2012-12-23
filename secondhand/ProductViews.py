@@ -82,7 +82,16 @@ def ProductInfo(request, productid):
 	},context_instance=RequestContext(request))
 
 def Search(request):
-	return HttpResponse("hello")
+	loginuser = request.session.get('user')
+	query = request.GET.get('query', '')
+	products = Product.objects.filter(title__icontains = query)
+	return render_to_response('search.html', {
+		'isLogin': IsLogin(request),
+		'reg_or_login': False,
+		'loginuser': loginuser,
+		'products': products,
+		'query': query,
+	},context_instance=RequestContext(request))
 
 def AddProduct(request):
 	loginuser = request.session.get('user')
