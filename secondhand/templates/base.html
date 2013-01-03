@@ -27,6 +27,9 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/ico/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="/static/ico/apple-touch-icon-57-precomposed.png">
 		<link type="text/css" href="/static/css/custom-theme/jquery-ui.custom.css" rel="stylesheet">
+		<link type="text/css" href="/static/css/packed_library.css" rel="stylesheet">
+		<link type="text/css" href="/static/css/packed__all.css" rel="stylesheet">
+		<link type="text/css" href="/static/css/packed_dialog.css" rel="stylesheet">
 		<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery-ui.custom.min.js"></script>
 		<script type="text/javascript" src="/static/js/base.js"></script>
@@ -41,7 +44,7 @@
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="#">
-						Sysu-Secondhand-Market
+						GG
 					</a>
 					<ul class="nav">
 						<li>
@@ -51,7 +54,7 @@
 						</li>
 						<li>
 						<a href="/search/">
-							Search
+							See All>>
 						</a>
 						</li>
 					</ul>
@@ -90,48 +93,18 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="container"> -->
-			<!-- <hr> -->
-			<!-- <div class="row"> -->
-				<!-- <div class="span4"> -->
-					<!-- <div> -->
-						<!-- <h2> -->
-							<!-- Heading -->
-							<!-- </h2> -->
-						<!-- <p> -->
-						<!-- Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus -->
-						<!-- ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo -->
-						<!-- sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed -->
-						<!-- odio dui. -->
-						<!-- </p> -->
-						<!-- </div> -->
-					<!-- <a class="btn" href="#"> -->
-						<!-- Edit profile -->
-						<!-- <br> -->
-						<!-- </a> -->
-					<!-- </div> -->
-				<!-- <div class="span8"> -->
-					{% block content %}
-					{% endblock %}
-					<!-- </div> -->
-				<!-- </div> -->
-			<!-- <div class="hero-unit"> -->
-				<!-- <div> -->
-					<!-- <h1> -->
-						<!-- 这是一个广告 -->
-						<!-- </h1> -->
-					<!-- </div> -->
-				<!-- </div> -->
-			<!-- <div> -->
-				<!-- © Company 2012 -->
-				<!-- </div> -->
-			<!-- </div> -->
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"> -->
-			<!-- </script> -->
-		<!-- <script src="/static/js/bootstrap.js"> -->
-			<!-- </script> -->
+		<br clear="both" />
+		<br clear="both" />
+		<br clear="both" />
+		{% block content %}
+		{% endblock %}
 	</body>
-	<footer>
-		© Company 2012
+	<footer align="center">
+	<p></p>
+	<p>Copyright © 2012 All Rights Reserved?</p>
 	</footer>
+	<div id="totop">
+		<a href="#"><span><em>返回<br/>顶部</em></span></a>
+	</div>
+	{% block extend %}{% endblock %}
 </html>

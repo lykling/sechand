@@ -10,9 +10,7 @@
 				<ul class="nav nav-list">
 					<div class="">
 						<li class="nav-header">
-						<fieldset style="height:900;">
-							<img src="/static/img/noavatar_big.gif" alt="{{ tuser.name }}" />
-						</fieldset>
+						<img src="/static/img/noavatar_big.gif">
 						</li>
 						<li class="nav-header">
 					</div>
@@ -65,14 +63,13 @@
 		</div>
 		<div class="span8">
 			<div class="well sidebar">
-				<h3>最新物品</h3>
+				<h3>最新商品</h3>
 				<div class="row-fluid">
 					{% for product in products1 %}
 					<div class="span4">
 						<div class="well sidebar-nav">
-							<h3 name="Title">
-								{{ product.title }}
-							</h3>
+							<a href="/product/{{ product.id }}/"><h3 name="Title">{% if not product.valid %}(已关闭){% endif %}{{ product.title }}</h3></a>
+							<img src="/getpic/?uid={{ product.user.id }}&pid={{ product.id }}">
 							<p name="Description">
 							{{ product.descrip }}
 							</p>
@@ -87,9 +84,8 @@
 					{% for product in products2 %}
 					<div class="span4">
 						<div class="well sidebar-nav">
-							<h3 name="Title">
-								{{ product.title }}
-							</h3>
+							<a href="/product/{{ product.id }}/"><h3 name="Title">{% if not product.valid %}(已关闭){% endif %}{{ product.title }}</h3></a>
+							<img src="/getpic/?uid={{ product.user.id }}&pid={{ product.id }}">
 							<p name="Description">
 							{{ product.descrip }}
 							</p>

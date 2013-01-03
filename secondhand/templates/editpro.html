@@ -22,11 +22,9 @@
 		<div class="span4">
 			<div class="well sidebar-nav">
 				<ul class="nav nav-list">
-					<div class="well sidebar-nav">
+					<div class="">
 						<li class="nav-header">
-						<fieldset style="height:900;">
-							<img src="/static/img/loader.gif" alt="{{ loginuser.name }}" width=30 height=30 />
-						</fieldset>
+						<img src="/static/img/noavatar_big.gif" alt="{{ loginuser.name }}" />
 						</li>
 						<li class="nav-header">
 					</div>
@@ -63,37 +61,37 @@
 			<div class="hero-unit">
 				<div>
 					<p>
-					<h1>
-						Edit your profile
-					</h1>
+					<h2>
+						修改个人信息
+					</h2>
 					</p>
 					<p></p>
 					<p>
 					<form class="row-fluid" action="" method="POST">
 						{% csrf_token %}
 						<div class="row-fluid">
-							<div class="span1">
+							<div class="span2">
 								<label for="id_nick">NickName:</label>
 							</div>
-							<div id="id_nick" class="span1">
+							<div id="id_nick" class="span2">
 								<input type="text" name="nick" maxlength="32" value="{{ loginuser.nick }}"/>
 							</div>
 						</div>
 						<p></p>
 						<div class="row-fluid">
-							<div class="span1">
+							<div class="span2">
 								<label for="id_address">Address:</label>
 							</div>
-							<div id="id_address" class="span1">
+							<div id="id_address" class="span2">
 								<input type="text" name="address" maxlength="32" value="{{ loginuser.address }}"/>
 							</div>
 						</div>
 						<p></p>
 						<div class="row-fluid">
-							<div class="span1">
+							<div class="span2">
 								<label for="id_phone">PhoneNum:</label>
 							</div>
-							<div id="id_phone" class="span1">
+							<div id="id_phone" class="span2">
 								{% for phone in loginuser.phonenumber_set.all %}
 								{% if phone.num %}
 								<input type="text" name="phone" maxlength="32" value="{{ phone.num }}"/>
@@ -106,10 +104,10 @@
 						</div>
 						<p></p>
 						<div class="row-fluid">
-							<div class="span1">
+							<div class="span2">
 								<label for="id_mail">Email:</label>
 							</div>
-							<div id="id_mail" class="span1">
+							<div id="id_mail" class="span2">
 								{% for mail in loginuser.mail_set.all %}
 								{% if mail.address %}
 								<input type="text" name="mail" maxlength="32" value="{{ mail.address }}"/>
@@ -130,9 +128,6 @@
 			<div class="row-fluid">
 			</div>
 			<hr>
-			<div>
-				© Company 2012
-			</div>
 		</div>
 	</div>
 </div>

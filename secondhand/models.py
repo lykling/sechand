@@ -8,7 +8,7 @@ class User(models.Model):
 	pwd		= models.CharField(max_length=50)
 	visits	= models.IntegerField(default=0)
 	valid	= models.BooleanField(default=True)	
-	def __str__(self):
+	def __unicode__(self):
 		return '%s %s' %(self.nick,self.name)
 	
 	def FNNP(self):
@@ -33,7 +33,7 @@ class User(models.Model):
 class PhoneNumber(models.Model):
 	user	= models.ForeignKey(User)
 	num		= models.CharField(max_length=12)
-	def __str__(self):
+	def __unicode__(self):
 		return self.num
 
 	class Admin:
@@ -46,7 +46,7 @@ class Mail(models.Model):
 	user	= models.ForeignKey(User)
 	address	= models.CharField(max_length=50)
 	
-	def __str__(self):
+	def __unicode__(self):
 		return self.address
 	class Admin:
 		pass
@@ -62,7 +62,7 @@ class Product(models.Model):
 	visits		= models.IntegerField(default=0)
 	user		= models.ForeignKey(User)
 	valid		= models.BooleanField(default=True)	
-	def __str__(self):
+	def __unicode__(self):
 		return self.title
 	class Admin:
 		pass

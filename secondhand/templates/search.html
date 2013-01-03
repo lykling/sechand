@@ -4,32 +4,105 @@
 {% endblock %}
 {% block content %}
 <div class="well sidebar">
-	<div class="row-fluid">
-		<form class="navbar-form center" id="search" name="search" action="" method="GET">
-			<input class="span2" type="text" name="query" value="{{ query }}" placeholder="请输入查询关键字"/>
-			<input class="btn" type="submit" name="check" value="查询"/>
-		</form>
-	</div>
-</div>
-<p></p>
-<ul class="nav nav-list">
-	{% for product in products %}
-	<div class="row-fluid">
-		<div class="span6">
-			<div class="well sidebar-nav">
-				<h3 name="Title">
-					{{ product.title }}
-				</h3>
-				<p name="Description">
-				{{ product.descrip }}
-				</p>
-				<a class="btn" href="/product/{{ product.id }}/">
-					View details »
-				</a>
+	<div id="content">
+		<div class="grid-16-8 clearfix">
+			<div class="article articleSearch">
+				<div>
+					{% for error in errors %}
+					<p>{{ error }}</p>
+					{% endfor %}
+				</div>
+				<div class="row-fluid">
+					<form class="paginator" id="search" name="search" action="" method="GET">
+						<input class="span2" type="text" name="query" value="{{ query }}" placeholder="请输入查询关键字"/>
+						<input class="span2" type="text" name="user_name" value="{{ user_name }}" placeholder="请输入用户名">
+						<input class="btn" type="submit" name="check" value="查询"/>
+					</form>
+				</div>
 			</div>
+			<p></p>
+			{% if products %}
+			<ul class="nav nav-list">
+				<div class="rr">
+					<p>第{{ page.curr }}页  共{{ products_all|length }}条记录  {{ page.tail }}页</p>
+				</div>
+				<div class="paginator" id="pages_navigation">
+					<span class="prev">
+						{% ifnotequal page.curr page.head %}<a href="?query={{ query }}&user_name={{ user_name }}&page={{ page.prev }}">&lt前页</a>
+						{% else %}
+						&lt前页
+						{% endifnotequal %}
+					</span>
+					{% for pagei in page.range %}
+					{% ifnotequal pagei page.curr %}<a href="?query={{ query }}&user_name={{ user_name }}&page={{ pagei }}">{% else %}<span class="thispage">{% endifnotequal %}{{ pagei }}{% ifnotequal pagei page.curr %}</a>{% else %}</span>{% endifnotequal %}
+					{% endfor %}
+					<span class="next">
+						{% ifnotequal page.tail page.curr%}
+						<a id="next_page" href="?query={{ query }}&user_name={{ user_name }}&page={{ page.next }}">后页&gt</a>
+						{% else %}
+						后页&gt
+						{% endifnotequal %} </span> </div>
+				<br clear="both" />
+				<ul class="" align="center" id="record_list">
+					{% for product in products %}
+					{% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 %}
+					<div class="row-fluid">
+						{% endif %}
+						<div class="span6">
+							<div class="well sidebar-nav">
+								<a href="/product/{{ product.id }}/"><h3 name="Title">{% if not product.valid %}(已关闭){% endif %}{{ product.title }}</h3></a>
+								<div class="row-fluid">
+									<img class="span6" src="/getpic/?uid={{ product.user.id }}&pid={{ product.id }}">
+									<div class="span6">
+										<p class="" name="Description">
+										{{ product.descrip }}
+										</p>
+										<a class="btn" href="/product/{{ product.id }}/">View details »	</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% if forloop.counter == 2 or forloop.counter == 4 or forloop.counter == 6 %}
+					</div>
+					{% endif %}
+					{% endfor %}
+					<div class="clearfix"></div>
+				</ul>
+				<br clear="both" />
+				<div class="paginator" id="pages_navigation">
+					<span class="prev">
+						{% ifnotequal page.curr page.head %}<a href="?query={{ query }}&user_name={{ user_name }}&page={{ page.prev }}">&lt前页</a>
+						{% else %}
+						&lt前页
+						{% endifnotequal %}
+					</span>
+					{% for pagei in page.range %}
+					{% ifnotequal pagei page.curr %}<a href="?query={{ query }}&user_name={{ user_name }}&page={{ pagei }}">{% else %}<span class="thispage">{% endifnotequal %}{{ pagei }}{% ifnotequal pagei page.curr %}</a>{% else %}</span>{% endifnotequal %}
+					{% endfor %}
+					<span class="next">
+						{% ifnotequal page.tail page.curr%}
+						<a id="next_page" href="?query={{ query }}&user_name={{ user_name }}&page={{ page.next }}">后页&gt</a>
+						{% else %}
+						后页&gt
+						{% endifnotequal %}
+					</span>
+				</div>
+			</ul>
+			{% else %}
+			<p>No product matched your search criteria.</p>
+			{% endif %}
 		</div>
 	</div>
-	{% endfor %}
-</ul>
+</div>
 {% endblock %}
 
+{% block extend%}
+{% if products %}
+<div class="paginator2" id="pages_navigation2">
+	{% ifnotequal page.curr page.head %}<a href="?query={{ query }}&user_name={{ user_name }}&page={{ page.prev }}">&<button id="page-switcher-prev" class="page-switcher" tabindex="2" style="width:73px;left:0px;top:0px;padding-bottom:0px;position:fixed">‹</button></a>{% endifnotequal %}
+	{% ifnotequal page.tail page.curr %}
+	<a id="next_page" href="?query={{ query }}&user_name={{ user_name }}&page={{ page.next }}"><button id="page-switcher-next" class="page-switcher" tabindex="3" style="width:73px;right:0px;top:0px;padding-bottom:0px;position:fixed">›</button></a>
+	{% endifnotequal %}
+</div>
+{% endif %}
+{% endblock %}

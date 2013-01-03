@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="well sidebar">
-<form id="addproduct" name="addproduct" action="" method="POST">
+<form id="addproduct" enctype="multipart/form-data" name="addproduct" action="" method="POST">
 	{% csrf_token %}
 	<table align="center">
 		<tr>
@@ -12,6 +12,16 @@
 			</td>
 			<td>
 				<input id="title" type="text" size="20" maxlength="16" name="title">
+			</td>
+		</tr>
+		<tr>
+			<td class="span1">
+				<label for="image">
+				<p>图片</p>
+				</label>
+			</td>
+			<td>
+				<input id="image" type="file" name="image">
 			</td>
 		</tr>
 		<tr>

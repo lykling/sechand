@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block morehead %}
 <script type="text/javascript">
-	window.onload=setTimeout ("window.location.assign('/index/')", 1000);
+	window.onload=setTimeout ("window.location.assign('{{ turl }}')", {{ timeout }});
 </script>
 {% endblock %}
 {% block content %}

@@ -36,6 +36,11 @@ urlpatterns += patterns('secondhand.UserView',
 	(r'^register/$', Register),
 	(r'^profile/(\d+)/$', LoginRequired(ShowUser)),
 )
+urlpatterns += patterns('secondhand.BasicViews',
+	(r'^getpic/$', GetPic),
+	(r'^getcomments/$', LoginRequired(GetComments)),
+)
+
 urlpatterns += patterns('secondhand.Test',
 		(r'^test/$', Test),
 )

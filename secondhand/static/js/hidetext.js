@@ -1,4 +1,13 @@
 
+function isFull (pChar) {
+	for (var i = 0; i < pChar.strLen ; i++ ) {     
+		if ((pChar.charCodeAt(i) > 128)) { 
+			return true; 
+		} else { 
+			return false; 
+		}
+	}
+}
 function longtext(){
 	var title_len = 13;
 	var descrip_len = 29;

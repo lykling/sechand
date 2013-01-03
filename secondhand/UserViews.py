@@ -17,7 +17,7 @@ def ShowUser(request,user_id):
 			commenttime = now,
 			commenter_uid = loginuser.id,
 			targetuser = user,
-			content = request.POST.get('comment')
+			content = u'%s' % (request.POST.get('comment', ''))
 		)
 		return render_to_response('dialogform/comment_form.html', {
 			'errors': [],
@@ -41,6 +41,12 @@ def ShowUser(request,user_id):
 	products1 = products[0:3]
 	products2 = products[3:6]
 	comments = user.commentuser_set.order_by('-commenttime')
+	commentFilter(comments)
+	number_per_page = 5
+	page = Page()
+	page.head = 1
+	page.curr = int(request.POST.get('page',1))
+	page.tail = (len(comments) - 1) / number_per_page + 1
 	return render_to_response('user.html', {
 		'isLogin': IsLogin(request),
 		'reg_or_login': False,
@@ -50,6 +56,7 @@ def ShowUser(request,user_id):
 		'products1': products1,
 		'products2': products2,
 		'comments': comments,
+		'page': page,
 	},context_instance=RequestContext(request))
 
 def Login(request):
@@ -65,9 +72,23 @@ def Login(request):
 		except User.DoesNotExist:
 			errors.append(u'user %s is not exist' % (loginform['username']))
 		else:
+			if not user.valid:
+				return render_to_response('msg_redirect.html', {
+					'turl': '/login/',
+					'timeout': '1000',
+					'isLogin': IsLogin(request),
+					'reg_or_login': True,
+					'message': u'用户已被禁用，无法登录。',
+				},context_instance=RequestContext(request))
 			if user.pwd == md5(loginform['password']).hexdigest():
 				request.session['user'] = user
-				return HttpResponseRedirect('/index/')
+				return render_to_response('msg_redirect.html', {
+					'turl': '/login/',
+					'timeout': '1000',
+					'isLogin': IsLogin(request),
+					'reg_or_login': True,
+					'message': u'登录成功。',
+				},context_instance=RequestContext(request))
 			else:
 				errors.append(u'password error!')
 	return render_to_response('login.html', {
@@ -82,7 +103,7 @@ def Register(request):
 	errors = []
 	regform = {}
 	if request.method == "POST":
-		regform['username'] = request.POST.get('username')
+		regform['username'] = u'%s' % (request.POST.get('username'))
 		regform['password'] = request.POST.get('password')
 		regform['conform'] = request.POST.get('conform')
 		if checkRegister(regform, errors):
@@ -94,6 +115,10 @@ def Register(request):
 				valid=True
 			)
 			return render_to_response('msg_redirect.html', {
+				'turl': '/index/',
+				'timeout': '1000',
+				'isLogin': IsLogin(request),
+				'reg_or_login': True,
 				'message': u'注册成功',
 			},context_instance=RequestContext(request))
 	return render_to_response('register.html', {
@@ -113,6 +138,10 @@ def Logout(request):
 	else :
 		pass
 	return render_to_response('msg_redirect.html', {
+		'turl': '/index/',
+		'timeout': '1000',
+		'isLogin': IsLogin(request),
+		'reg_or_login': False,
 		'message': message,
 	},context_instance=RequestContext(request))
 
@@ -122,8 +151,8 @@ def EditPro(request):
 	if loginuser.id != int(uid):
 		return HttpResponseRedirect("/")
 	elif request.POST.get('submit') == 'Save':
-		address = request.POST.get('address')
-		nick = request.POST.get('nick')
+		address = u'%s' % (request.POST.get('address'))
+		nick = u'%s' % (request.POST.get('nick'))
 		loginuser.address = address
 		loginuser.nick = nick
 		loginuser.save()
@@ -170,6 +199,7 @@ def EditPro(request):
 				mails_old[i].num = ""
 				mails_old[i].save()
 	return render_to_response('editpro.html', {
+		'isLogin': IsLogin(request),
 		'loginuser': loginuser,
 		'reg_or_login': False,
 		'tuser': loginuser,
